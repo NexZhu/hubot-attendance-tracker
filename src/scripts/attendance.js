@@ -49,6 +49,7 @@ module.exports = function (robot) {
     var MILLISEC_PER_HOUR = 60 * 60 * 1000;
     var MILLISEC_PER_MINUTE =  60 * 1000;
     var BASE_WORK_DURATION = MILLISEC_PER_HOUR * 9;
+    var MONTH_NAME = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     robot.hear(/^list(?: -u ([^\s]+))?(?: (?:(\d{2}|\d{4})\/?)?(\d{1,2}))? *$/i, listCommand('list'));
 
@@ -89,7 +90,7 @@ module.exports = function (robot) {
                     response = msg.random(RESPONSE_BEFORE_TO_CSV);
                 }
                 response = response.replace(/%\{user\}/, user);
-                response = response.replace(/%\{month\}/, month + 1);
+                response = response.replace(/%\{month\}/, MONTH_NAME[month]);
                 msg.send(response);
 
                 setTimeout(function() {
@@ -191,7 +192,7 @@ module.exports = function (robot) {
 
                     var response = list ? msg.random(RESPONSE_AFTER_TO_LIST) : msg.random(RESPONSE_NONE_TO_LIST);
                     response = response.replace(/%\{list\}/, list);
-                    response = response.replace(/%\{month\}/, month + 1);
+                    response = response.replace(/%\{month\}/, MONTH_NAME[month]);
                     msg.send(response);
                 }, 1000);
             } catch (e) {

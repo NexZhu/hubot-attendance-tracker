@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/hubot-attendance.svg)](https://badge.fury.io/js/hubot-attendance)
+
 # hubot-attendance
 
 #### An attendance logging script for hubot
