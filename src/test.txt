@@ -1,0 +1,47 @@
+list
+list 10
+list 1410
+list 14/10
+list 201410
+list 2014/10
+list -u hirosat 10
+list -u hirosat 1410
+list -u hirosat 14/10
+list -u hirosat 201410
+list -u hirosat 2014/10
+hi
+hi 10
+hi 10-
+hi 10-17
+hi 1003 10
+hi 10/03 1000
+hi 10/3 10:00
+hi 141003 10
+hi 14/10/03 10
+hi 14/10/3 10
+hi 20141003 10
+hi 2014/10/03 10
+hi 2014/10/3 10
+hi 1003 10-
+hi 1003 10-17
+hi -u hirosat
+hi -u hirosat 10
+hi -u hirosat 10-
+hi -u hirosat 10-17
+hi -u hirosat 1003 10
+hi -u hirosat 1003 10-
+hi -u hirosat 1003 10-17
+bye
+bye 17
+bye -17
+bye 10-17
+bye 1003 17
+bye 1003 -17
+bye 1003 10-17
+bye -u hirosat
+bye -u hirosat 17
+bye -u hirosat -17
+bye -u hirosat 10-17
+bye -u hirosat 1003 17
+bye -u hirosat 1003 -17
+bye -u hirosat 1003 10-17

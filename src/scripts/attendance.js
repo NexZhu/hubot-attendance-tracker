@@ -1,23 +1,28 @@
 // Description:
-//   タイムカード（勤務表）コマンドです。勤務開始/終了時刻の記録と勤務表の表示ができます。
+//   Attendance command using hubot.
+//   This script is customized from otsubot(https://github.com/rotsuya/otsubot)
+//
+// Dependencies:
+//   None
+//
+// Configuration:
+//   None
 //
 // Commands:
-//   hi [-u <user>] [[<date>] <from time>[-<to time>]] - 勤務開始時刻を記録します。
-//   bye [-u <user>] [[<date>] [<from time>-]<to time>] - 勤務終了時刻を記録します。
-//   list [-u <user>] [<month>] - 勤務表を表示します。
-//   csvlist [-u <user>] [<month>] - 勤務表をCSV形式で表示。（使い方はlistと同じ）
+//   hi [-u <user>] [[<date>] <from time>[-<to time>]] - Set a working start time.
+//   bye [-u <user>] [[<date>] [<from time>-]<to time>] - Set a working end time.
+//   list [-u <user>] [<month>] - Print a working time list.
+//   csvlist [-u <user>] [<month>] - Print a working time list as a csv format.
 //
 // Examples:
-//   hi - 今、会社に着いた。
-//   bye - 今、会社を出る。
-//   list - 今月の勤務表を見たい。
-//   hi 9 - 今朝は9:00に出社した。
-//   bye 1730 - 今日は17:30に退社した。
-//   hi 12/24 9-1730 - 12月24日は9:00~17:30まで勤務した。
-//   bye 12/24 9-1730 - 同上
-//   bye -u rotsuya - rotsuyaが会社を出たので代わりに記録してあげる。
-//   list 201412 - 2014年12月の勤務表を見たい。
-//   list -u rotsuya 201412 - rotsuyaの2014年12月の勤務表を見たい。
+//   hi - Type this when you arrive your company.
+//   bye - Type this when you leave your company.
+//   list - Type this when you want to see a working time list of this month.
+//   hi 9 - You arrived your company at 9:00.
+//   bye 1730 - You left your company at 17:30.
+//   hi 1224 0900 - December 24, you worked from 9:00.
+//   bye 12/24 9-1730 - December 24, you worked from 9:00 to 17:30.
+//   list 201412 - You want to see a working time list of December 2014.
 //
 // Notes:
 //   <date> is YYYY/MM/DD, YYYYMMDD, YY/MM/DD, YYMMDD, MM/DD, M/D or MDD
@@ -25,27 +30,21 @@
 //   <month> is YYYY/MM, YYYYMM, YY/MM, YYMM, MM or M
 //
 // Author:
-//   rotsuya
+//   hirosat
 
 module.exports = function (robot) {
-    var RESPONSE_TO_YOTEI = ['了解！ %{user} は本日、%{from} に出社予定です。'];
-    var RESPONSE_TO_HI = ['おはようございます。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'];
-    var RESPONSE_TO_BYE = [
-        'お疲れさま。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
-        ,'お疲れさま。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
-        ,'お疲れさま。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
-        ,'お疲れさま。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
-        ,'乙。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
-    ];
-    var RESPONSE_BEFORE_TO_LIST = ['%{user}の%{month}月の勤務表だね。'];
-    var RESPONSE_BEFORE_TO_CSV = ['%{user}の%{month}月の勤務表をCSV出力するよ。'];
+    var RESPONSE_TO_FUTURE = ['Sure. %{user} will arrive at %{from}.'];
+    var RESPONSE_TO_HI = ['Good morning! %{user} started working at %{from}-%{to} on %{date}.'];
+    var RESPONSE_TO_BYE = ['Good bye! %{user} finished working at %{from}-%{to} on %{date}.'];
+    var RESPONSE_BEFORE_TO_LIST = ['OK. There is %{user}\'s working time list on %{month}.'];
+    var RESPONSE_BEFORE_TO_CSV = ['OK. There is %{user}\'s working time list on %{month} with CSV format.'];
     var RESPONSE_AFTER_TO_LIST = ['%{list}'];
     var LIST_HEADER = 'date       | recorded      | calculated    | duration | overtime';
     var LIST_FOOTER = 'sum        |       |       |       |       | ';
     var CSV_HEADER = 'Date,Start,End,"Calc start","Calc end",Duration,Overtime';
     var CSV_FOOTER = 'Sum,,,,,';
-    var RESPONSE_NONE_TO_LIST = ['なかったよ。'];
-    var RESPONSE_TO_ERROR = ['エラーが起きちゃった。%{message}'];
+    var RESPONSE_NONE_TO_LIST = ['The list of %{month} is nothing.'];
+    var RESPONSE_TO_ERROR = ['Error occurred: %{message}'];
     var INCREMENT_MINUTES = 15;
     var MILLISEC_PER_HOUR = 60 * 60 * 1000;
     var MILLISEC_PER_MINUTE =  60 * 1000;
@@ -192,6 +191,7 @@ module.exports = function (robot) {
 
                     var response = list ? msg.random(RESPONSE_AFTER_TO_LIST) : msg.random(RESPONSE_NONE_TO_LIST);
                     response = response.replace(/%\{list\}/, list);
+                    response = response.replace(/%\{month\}/, month + 1);
                     msg.send(response);
                 }, 1000);
             } catch (e) {
@@ -220,7 +220,7 @@ module.exports = function (robot) {
                 var futureFlag = 0;
 
                 if (dateInput && !fromInput && !toInput) {
-                    throw (new Error('第1引数があるのに、第2、第3引数が無いよ。'));
+                    throw (new Error('Argument error.'));
                     return;
                 }
 
@@ -304,7 +304,7 @@ module.exports = function (robot) {
     function respond(command, user, date, from, to, flag, msg) {
         if (/hi/.test(command)) {
             if (flag === 1) {
-                var response = msg.random(RESPONSE_TO_YOTEI);
+                var response = msg.random(RESPONSE_TO_FUTURE);
             } else {
                 var response = msg.random(RESPONSE_TO_HI);
             }
@@ -331,14 +331,14 @@ module.exports = function (robot) {
             var hm = /^(\d{1,2})$/.exec(string);
         }
         if (!hm) {
-            throw (new Error('時刻がパースできないよ。'));
+            throw (new Error('Time parse failed.'));
             return;
         }
         var time = new Date(year, month, day, (hm[1] - 0) || 0, (hm[2] - 0) || 0);
         var today = new Date(year, month, day);
         var tomorrow = new Date(year, month, day + 1);
         if (time < today || time >= tomorrow) {
-            throw (new Error('時刻がおかしいよ。'));
+            throw (new Error('Time format error.'));
             return;
         }
         return time;
@@ -356,7 +356,7 @@ module.exports = function (robot) {
             var ymd = /^(\d{2}|\d{4})?(\d{1,2})(\d{2})$/.exec(string);
         }
         if (!ymd) {
-            throw (new Error('日付がパースできないよ。'));
+            throw (new Error('Date parse failed.'));
             return;
         }
 

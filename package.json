@@ -1,32 +1,17 @@
 {
-  "name": "otsubot",
-  "version": "2.0.0",
-  "private": true,
-  "author": "Ryosuke Otsuya <r.otsuya@gmail.com>",
-  "description": "A robot recording timecard",
-  "dependencies": {
-    "hubot": "^2.12.0",
-    "hubot-help": "^0.1.1",
-    "hubot-heroku-keepalive": "^1.0.0",
-    "hubot-redis-brain": "0.0.2",
-    "hubot-slack": "^3.3.0"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "main": "./bin/hubot",
+  "name": "hubot-attendance",
+  "description": "An attendance logging script for hubot",
+  "version": "1.0.0",
+  "author": "hirosat <hirotaka0426@gmail.com>",
+  "main": "./src/index.coffee",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rotsuya/otsubot.git"
+    "url": "https://github.com/hirosat/hubot-attendance.git"
   },
-  "keywords": [
-    "hubot",
-    "slack",
-    "bot"
-  ],
   "license": "MIT",
+  "keywords": "hubot, hubot-scripts, attendance",
   "bugs": {
-    "url": "https://github.com/rotsuya/otsubot/issues"
+    "url": "https://github.com/hirosat/hubot-attendance/issues"
   },
-  "homepage": "https://github.com/rotsuya/otsubot"
+  "homepage": "https://github.com/hirosat/hubot-attendance"
 }
