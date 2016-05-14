@@ -1,7 +1,7 @@
 {
   "name": "hubot-attendance",
   "description": "An attendance logging script for hubot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "hirosat <hirotaka0426@gmail.com>",
   "main": "./src/index.coffee",
   "repository": {

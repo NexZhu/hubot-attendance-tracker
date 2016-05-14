@@ -1,0 +1,100 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/hirosat/.nodebrew/node/v5.9.1/bin/node',
+1 verbose cli   '/Users/hirosat/.nodebrew/current/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@3.7.3
+3 info using node@v5.9.1
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/hirosat/dev/github/hubot-attendance',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/hirosat/.npm/hubot-attendance/1.0.0/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/hirosat/.npm correctMkdir not in flight; initializing
+10 info lifecycle hubot-attendance@1.0.0~prepublish: hubot-attendance@1.0.0
+11 silly lifecycle hubot-attendance@1.0.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/hirosat/.npm/hubot-attendance/1.0.0/package.tgz',
+12 verbose tar pack   '/Users/hirosat/dev/github/hubot-attendance' ]
+13 verbose tarball /Users/hirosat/.npm/hubot-attendance/1.0.0/package.tgz
+14 verbose folder /Users/hirosat/dev/github/hubot-attendance
+15 verbose addLocalTarball adding from inside cache /Users/hirosat/.npm/hubot-attendance/1.0.0/package.tgz
+16 verbose correctMkdir /Users/hirosat/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd hubot-attendance@1.0.0
+18 verbose afterAdd /Users/hirosat/.npm/hubot-attendance/1.0.0/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/hirosat/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/hirosat/.npm/hubot-attendance/1.0.0/package/package.json written
+21 silly publish { name: 'hubot-attendance',
+21 silly publish   description: 'An attendance logging script for hubot',
+21 silly publish   version: '1.0.0',
+21 silly publish   author: { name: 'hirosat', email: 'hirotaka0426@gmail.com' },
+21 silly publish   main: './src/index.coffee',
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/hirosat/hubot-attendance.git' },
+21 silly publish   license: 'MIT',
+21 silly publish   keywords: [ 'hubot', 'hubot-scripts', 'attendance' ],
+21 silly publish   bugs: { url: 'https://github.com/hirosat/hubot-attendance/issues' },
+21 silly publish   homepage: 'https://github.com/hirosat/hubot-attendance',
+21 silly publish   readme: '[![npm version](https://badge.fury.io/js/hubot-attendance.svg)](https://badge.fury.io/js/hubot-attendance)\n\n# hubot-attendance\n\n#### An attendance logging script for hubot\n\n## Description:\n\nAttendance command using [Hubot](http://github.com/github/hubot).\n\nThis script is customized from [otsubot](https://github.com/rotsuya/otsubot). Difference(May 14, 2016) is following:\n\n* CSV output format support.\n* A future arrive response changed.\n* A working hours calculation method changed (flex-time).\n* Registered as a npm command.\n* Translate into English.\n\n## Installation\n\nRun the npm install command...\n\n    npm install hubot-attendance\n\nAdd the script to the `external-scripts.json` file\n\n    ["hubot-attendance"]\n\n## Commands:\n\n* `hi [-u <user>] [[<date>] <from time>[-<to time>]]` - Set a working start time.\n* `bye [-u <user>] [[<date>] [<from time>-]<to time>]` - Set a working end time.\n* `list [-u <user>] [<month>]` - Print a working time list.\n* `csvlist [-u <user>] [<month>]` - Print a working time list as a csv format.\n\n### Formatting\n\n* `<date>` is YYYY/MM/DD, YYYYMMDD, YY/MM/DD, YYMMDD, MM/DD, M/D or MDD\n* `<time>` is HH:MM, HHMM, H:MM, HMM, HH or H\n* `<month>` is YYYY/MM, YYYYMM, YY/MM, YYMM, MM or M\n\n## Examples:\n\n### Basics\n\n* `hi` - Type this when you arrive your company.\n* `bye` - Type this when you leave your company.\n* `list` - Type this when you want to see a working time list of this month.\n\n### Advanced\n\n* `hi 9` - You arrived your company at 9:00.\n* `bye 1730` - You left your company at 17:30.\n* `hi 1224 0900` - December 24, you worked from 9:00.\n* `bye 12/24 9-1730` - December 24, you worked from 9:00 to 17:30.\n* `list 201412` - You want to see a working time list of December 2014.\n\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '896a4f8ab6cfcc9f6b9d6668bfb235e0a82c88ce',
+21 silly publish   _id: 'hubot-attendance@1.0.0',
+21 silly publish   scripts: {},
+21 silly publish   _shasum: '5e402211282be8172740a983fbf86bcc3a2efdd4',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name hubot-attendance
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry uri https://registry.npmjs.org/hubot-attendance
+27 verbose publish registryBase https://registry.npmjs.org/
+28 silly publish uploading /Users/hirosat/.npm/hubot-attendance/1.0.0/package.tgz
+29 verbose request uri https://registry.npmjs.org/hubot-attendance
+30 verbose request sending authorization for write operation
+31 info attempt registry request try #1 at 22:05:09
+32 verbose request using bearer token for auth
+33 verbose request id 270575d555021c42
+34 http request PUT https://registry.npmjs.org/hubot-attendance
+35 http 403 https://registry.npmjs.org/hubot-attendance
+36 verbose headers { 'content-type': 'application/json',
+36 verbose headers   'cache-control': 'max-age=300',
+36 verbose headers   'content-length': '95',
+36 verbose headers   'accept-ranges': 'bytes',
+36 verbose headers   date: 'Sat, 14 May 2016 13:05:10 GMT',
+36 verbose headers   via: '1.1 varnish',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'x-served-by': 'cache-nrt6130-NRT',
+36 verbose headers   'x-cache': 'MISS',
+36 verbose headers   'x-cache-hits': '0',
+36 verbose headers   'x-timer': 'S1463231109.495980,VS0,VE507',
+36 verbose headers   vary: 'Accept-Encoding' }
+37 verbose request invalidating /Users/hirosat/.npm/registry.npmjs.org/hubot-attendance on PUT
+38 error publish Failed PUT 403
+39 verbose stack Error: "You cannot publish over the previously published version 1.0.0." : hubot-attendance
+39 verbose stack     at makeError (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+39 verbose stack     at CachingRegistryClient.<anonymous> (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+39 verbose stack     at Request._callback (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+39 verbose stack     at Request.self.callback (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/request/request.js:199:22)
+39 verbose stack     at emitTwo (events.js:100:13)
+39 verbose stack     at Request.emit (events.js:185:7)
+39 verbose stack     at Request.<anonymous> (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/request/request.js:1036:10)
+39 verbose stack     at emitOne (events.js:95:20)
+39 verbose stack     at Request.emit (events.js:182:7)
+39 verbose stack     at IncomingMessage.<anonymous> (/Users/hirosat/.nodebrew/node/v5.9.1/lib/node_modules/npm/node_modules/request/request.js:963:12)
+40 verbose statusCode 403
+41 verbose pkgid hubot-attendance
+42 verbose cwd /Users/hirosat/dev/github/hubot-attendance
+43 error Darwin 15.4.0
+44 error argv "/Users/hirosat/.nodebrew/node/v5.9.1/bin/node" "/Users/hirosat/.nodebrew/current/bin/npm" "publish"
+45 error node v5.9.1
+46 error npm  v3.7.3
+47 error code E403
+48 error "You cannot publish over the previously published version 1.0.0." : hubot-attendance
+49 error If you need help, you may report this error at:
+49 error     <https://github.com/npm/npm/issues>
+50 verbose exit [ 1, true ]
