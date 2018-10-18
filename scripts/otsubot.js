@@ -35,6 +35,7 @@ module.exports = function (robot) {
         ,'お疲れさま。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
         ,'乙。%{user}の%{date}の勤務時間は%{from}~%{to}だね。'
     ];
+    var RESPONSE_TO_REMOVE = ['%{user}の%{date}の勤務記録を削除だね。'];
     var RESPONSE_BEFORE_TO_LIST = ['%{user}の%{month}月の勤務表だね。'];
     var RESPONSE_AFTER_TO_LIST = ['%{list}'];
     var LIST_HEADER = 'date       | recorded      | calculated    | overtime';
@@ -55,6 +56,8 @@ module.exports = function (robot) {
     robot.hear(/^(?:hi|hello|おは\S*)(?: -u ([^\s]+))?(?:(?: ([\d\/]+))?(?: (?:([\d:]+)-?)(?:-([\d:]+))?))? *$/i, hiByeCommand('hi'));
 
     robot.hear(/^(?:bye|おつ\S*|お疲れ\S*|乙|さよ\S*)(?: -u ([^\s]+))?(?:(?: ([\d\/]+))?(?: (?:([\d:]+)-)?(?:-?([\d:]+))))? *$/i, hiByeCommand('bye'));
+
+    robot.hear(/^(?:del|delete|rm|remove)(?: -u ([^\s]+))?(?: ([\d\/]+))+ *$/i, removeCommand());
 
     function listCommand(msg) {
         try {
@@ -234,6 +237,32 @@ module.exports = function (robot) {
         };
     }
 
+    function removeCommand() {
+        return function (msg) {
+            try {
+                var user = msg.match[1] ?
+                    msg.match[1].replace(/^@/, '') :
+                    msg.message.user.name;
+                var dateInput = msg.match[2];
+                if (!dateInput) {
+                    throw (new Error('日付が指定されてないよ。'));
+                }
+
+                var date = getDateFromDateString(dateInput);
+                var dateOutput = getDateStringFromDate(date, '/');
+
+                remove(user, dateOutput);
+
+                var response = msg.random(RESPONSE_TO_REMOVE);
+                response = response.replace(/%\{user\}/, user);
+                response = response.replace(/%\{date\}/, dateOutput);
+                msg.send(response);
+            } catch (e) {
+                error(e, msg);
+            }
+        };
+    }
+
     function getTimeStringFromDate(time, separator) {
         var hour = zeroPadding(time.getHours(), 2);
         var minute = zeroPadding(time.getMinutes(), 2);
@@ -277,6 +306,12 @@ module.exports = function (robot) {
             value[1] = to;
         }
         robot.brain.set(JSON.stringify(key), value);
+    }
+
+    function remove(user, date) {
+        var key = [user, date];
+        var value = robot.brain.get(JSON.stringify(key)) || [];
+        robot.brain.remove(JSON.stringify(key), value);
     }
 
     function respond(command, user, date, from, to, msg) {
