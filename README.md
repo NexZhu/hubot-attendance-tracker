@@ -1,16 +1,31 @@
-# otsubot
+# hubot-attendance-tracker
 
-#### the timecard bot for Hubot and slack
+#### An attendance logging script for hubot
 
 ## Description:
 
-タイムカード（勤務表）コマンドです。勤務開始/終了時刻の記録と勤務表の表示ができます。
+Attendance command using [Hubot](http://github.com/github/hubot).
+
+This script is customized from [otsubot](https://github.com/rotsuya/otsubot) and [hubot-attendance]
+(https://github.com/hirosat/hubot-attendance).
+
+## Installation
+
+Run the npm install command...
+
+    npm install hubot-attendance-tracker
+
+Add the script to the `external-scripts.json` file
+
+    ["hubot-attendance-tracker"]
 
 ## Commands:
 
-* `hi [-u <user>] [[<date>] <from time>[-<to time>]]` - 勤務開始時刻を記録します。
-* `bye [-u <user>] [[<date>] [<from time>-]<to time>]` - 勤務終了時刻を記録します。
-* `list [-u <user>] [<month>]` - 勤務表を表示します。
+* `hi [-u <user>] [[<date>] <from time>[-<to time>]]` - Set a working start time.
+* `bye [-u <user>] [[<date>] [<from time>-]<to time>]` - Set a working end time.
+* `rm [-u <user>] <date>` - Remove a record.
+* `list [-u <user>] [<month>]` - Print a working time list.
+* `csvlist [-u <user>] [<month>]` - Print a working time list as a csv format.
 
 ### Formatting
 
@@ -22,24 +37,19 @@
 
 ### Basics
 
-* `hi` - 今、会社に着いた。
-* `bye` - 今、会社を出る。
-* `list` - 今月の勤務表を見たい。
+* `hi` - Type this when you arrive your company.
+* `bye` - Type this when you leave your company.
+* `list` - Type this when you want to see a working time list of this month.
 
 ### Advanced
 
-* `hi 9` - 今朝は9:00に出社した。
-* `bye 1730` - 今日は17:30に退社した。
-* `hi 12/24 9-1730` - 12月24日は9:00~17:30まで勤務した。
-* `bye 12/24 9-1730` - 同上
-* `bye -u rotsuya` - rotsuyaが会社を出たので代わりに記録してあげる。
-* `list 201412` - 2014年12月の勤務表を見たい。
-* `list -u rotsuya 201412` - rotsuyaの2014年12月の勤務表を見たい。
-
-## Usage:
-
-https://github.com/rotsuya/otsubot/wiki
-
-## Future Work:
-
-https://github.com/rotsuya/otsubot/issues
+* `hi 9` - You arrived your company at 9:00.
+* `bye 1730` - You left your company at 17:30.
+* `hi 1224 0900` - December 24, you worked from 9:00.
+* `hi 12/24 9-1730` - December 24, you worked from 9:00 to 17:30.
+* `bye 12/24 9-1730` - Same as above.
+* `bye -u rotsuya` - rotsuya left your company.
+* `rm 12/24` - Remove the record of December 24.
+* `list 201412` - You want to see a working time list of December 2014.
+* `list -u rotsuya 201412` - You want to see a working time list for rotsuya of
+December 2014.

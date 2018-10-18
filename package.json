@@ -1,36 +1,16 @@
 {
-  "name": "otsubot",
+  "name": "hubot-attendance-tracker",
+  "description": "An attendance logging script for hubot",
   "version": "2.0.0",
-  "private": true,
-  "author": "Ryosuke Otsuya <r.otsuya@gmail.com>",
-  "description": "A robot recording timecard",
-  "dependencies": {
-    "hubot": "^2.12.0",
-    "hubot-help": "^0.1.1",
-    "hubot-heroku-keepalive": "^1.0.0",
-    "hubot-redis-brain": "0.0.2",
-    "hubot-slack": "^3.3.0"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "main": "./bin/hubot",
+  "author": "Nex Zhu <nexzhu@gmail.com> (https://nexzhu.github.io/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rotsuya/otsubot.git"
-  },
-  "keywords": [
-    "hubot",
-    "slack",
-    "bot"
-  ],
-  "scripts": {
-    "start": "bin/hubot --adapter slack",
-    "debug": "bin/hubot"
+    "url": "https://github.com/NexZhu/hubot-attendance-tracker.git"
   },
   "license": "MIT",
+  "keywords": "hubot, hubot-scripts, attendance",
   "bugs": {
-    "url": "https://github.com/rotsuya/otsubot/issues"
+    "url": "https://github.com/NexZhu/hubot-attendance-tracker/issues"
   },
-  "homepage": "https://github.com/rotsuya/otsubot"
+  "homepage": "https://github.com/NexZhu/hubot-attendance-tracker"
 }
