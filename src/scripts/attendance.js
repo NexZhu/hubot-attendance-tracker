@@ -46,7 +46,7 @@ module.exports = function (robot) {
   ' CSV format.']
   const RESPONSE_AFTER_TO_LIST = ['%{list}']
   const LIST_HEADER = "| date       | from  | to    | from' | to'   | delta | over  |\n| :--------- |:----- | :---- | :---- | :---- | :---- | :---- |"
-  const LIST_FOOTER = '| sum        |       |       |       |       |       |       |'
+  const LIST_FOOTER = '| sum        |       |       |       |       | '
   const CSV_HEADER = 'Date,Start,End,"Calc start","Calc end",Duration,Overtime'
   const CSV_FOOTER = 'Sum,,,,,'
   const RESPONSE_NONE_TO_LIST = ['The list of %{month} is nothing.']
@@ -194,7 +194,7 @@ module.exports = function (robot) {
             if (csvFlag) {
               list = '```' + CSV_HEADER + '\n' + list + CSV_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
             } else {
-              list = '```' + LIST_HEADER + '\n' + list + LIST_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
+              list = LIST_HEADER + '\n' + list + LIST_FOOTER + getTimeStringFromValue(durationSum, ':') + ' | |'
             }
           }
 

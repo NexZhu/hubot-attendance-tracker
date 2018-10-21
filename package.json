@@ -1,7 +1,7 @@
 {
   "name": "hubot-attendance-tracker",
   "description": "An attendance logging script for hubot",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "author": "Nex Zhu <nexzhu@gmail.com> (https://nexzhu.github.io/)",
   "main": "./src/index.coffee",
   "repository": {
