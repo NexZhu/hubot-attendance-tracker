@@ -51,7 +51,7 @@ module.exports = function (robot) {
   const CSV_FOOTER = 'Sum,,,,,'
   const RESPONSE_NONE_TO_LIST = ['The list of %{month} is nothing.']
   const RESPONSE_TO_ERROR = ['Error occurred: %{message}']
-  const INCREMENT_MINUTES = 15
+  const INCREMENT_MINUTES = 5
   const MILLISEC_PER_HOUR = 60 * 60 * 1000
   const MILLISEC_PER_MINUTE = 60 * 1000
   const BASE_WORK_DURATION = MILLISEC_PER_HOUR * 9
@@ -337,7 +337,7 @@ module.exports = function (robot) {
 
   function save(user, date, from, to) {
     const key = [user, date]
-    const value = robot.brain.get(JSON.stringify(key)) || []
+    const value = robot.brain.get(JSON.stringify(key)) || [[]]
     const l = value.length
     let cur = value[l - 1]
     if (cur[1]) {
