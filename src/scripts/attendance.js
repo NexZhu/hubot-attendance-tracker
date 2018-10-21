@@ -368,7 +368,7 @@ module.exports = function (robot) {
         response = msg.random(RESPONSE_TO_HI)
       }
     } else if (/bye/.test(command)) {
-      const response = msg.random(RESPONSE_TO_BYE)
+      response = msg.random(RESPONSE_TO_BYE)
     }
     response = response.replace(/%{user}/, user)
     response = response.replace(/%{date}/, date)
