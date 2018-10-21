@@ -129,7 +129,7 @@ module.exports = function (robot) {
 
             const dateString = getDateStringFromDate(date, '/')
             const key = [user, dateString]
-            const values = robot.brain.get(JSON.stringify(key))
+            const values = robot.brain.get(JSON.stringify(key)) || []
 
             values.forEach(value => {
               if (value) {
@@ -188,20 +188,20 @@ module.exports = function (robot) {
                 list += dateString + ',,,,,,\n'
               }
             })
-
-            if (list) {
-              if (csvFlag) {
-                list = '```' + CSV_HEADER + '\n' + list + CSV_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
-              } else {
-                list = '```' + LIST_HEADER + '\n' + list + LIST_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
-              }
-            }
-
-            let response = list ? msg.random(RESPONSE_AFTER_TO_LIST) : msg.random(RESPONSE_NONE_TO_LIST)
-            response = response.replace(/%{list}/, list)
-            response = response.replace(/%{month}/, MONTH_NAME[month])
-            msg.send(response)
           }
+
+          if (list) {
+            if (csvFlag) {
+              list = '```' + CSV_HEADER + '\n' + list + CSV_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
+            } else {
+              list = '```' + LIST_HEADER + '\n' + list + LIST_FOOTER + getTimeStringFromValue(durationSum, ':') + '```'
+            }
+          }
+
+          let response = list ? msg.random(RESPONSE_AFTER_TO_LIST) : msg.random(RESPONSE_NONE_TO_LIST)
+          response = response.replace(/%{list}/, list)
+          response = response.replace(/%{month}/, MONTH_NAME[month])
+          msg.send(response)
         }, 1000)
       } catch (e) {
         error(e, msg)
