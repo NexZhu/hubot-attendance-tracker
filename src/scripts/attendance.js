@@ -38,20 +38,26 @@
 
 module.exports = function (robot) {
   const RESPONSE_TO_FUTURE = ['Sure. %{user} will arrive at %{from}.']
-  const RESPONSE_TO_HI = ['Good morning! %{user} started working at %{from}-%{to} on %{date}.']
-  const RESPONSE_TO_BYE = ['Good bye! %{user} finished working at %{from}-%{to} on %{date}.']
+  const RESPONSE_TO_HI = ['Put your shoulder to the wheel! %{user} started working at' +
+  ' %{from}-%{to} on %{date}.']
+  const RESPONSE_TO_BYE = ['Good job! Well done! %{user} finished working at %{from}-%{to} on' +
+  ' %{date}.']
   const RESPONSE_TO_REMOVE = ['Removed record for %{user} on %{date}.']
   const RESPONSE_BEFORE_TO_LIST = ['OK. There is %{user}\'s working time list on %{month}.']
   const RESPONSE_BEFORE_TO_CSV = ['OK. There is %{user}\'s working time list on %{month} with' +
   ' CSV format.']
   const RESPONSE_AFTER_TO_LIST = ['%{list}']
-  const LIST_HEADER = "| date       | from  | to    | from' | to'   | delta | over  |\n| :--------- |:----- | :---- | :---- | :---- | :---- | :---- |"
-  const LIST_FOOTER = '| sum        |       |       |       |       | '
-  const CSV_HEADER = 'Date,Start,End,"Calc start","Calc end",Duration,Overtime'
-  const CSV_FOOTER = 'Sum,,,,,'
+  // const LIST_HEADER = "| date       | from  | to    | from' | to'   | delta | over  |\n| :--------- |:----- | :---- | :---- | :---- | :---- | :---- |"
+  const LIST_HEADER = "| date       | from  | to    | delta | over  |\n| :--------- |:----- | :---- | :---- | :---- |"
+  // const LIST_FOOTER = '| sum        |       |       |       |       | '
+  const LIST_FOOTER = '| sum        |       |       | '
+  // const CSV_HEADER = 'Date,Start,End,"Calc start","Calc end",Duration,Overtime'
+  const CSV_HEADER = 'Date,Start,End,Duration,Overtime'
+  // const CSV_FOOTER = 'Sum,,,,,'
+  const CSV_FOOTER = 'Sum,,,'
   const RESPONSE_NONE_TO_LIST = ['The list of %{month} is nothing.']
   const RESPONSE_TO_ERROR = ['Error occurred: %{message}']
-  const INCREMENT_MINUTES = 5
+  // const INCREMENT_MINUTES = 5
   const MILLISEC_PER_HOUR = 60 * 60 * 1000
   const MILLISEC_PER_MINUTE = 60 * 1000
   const BASE_WORK_DURATION = MILLISEC_PER_HOUR * 9
@@ -104,17 +110,17 @@ module.exports = function (robot) {
         setTimeout(function () {
           let list = ''
           let durationSum = 0
-          const increment = INCREMENT_MINUTES * MILLISEC_PER_MINUTE
+          // const increment = INCREMENT_MINUTES * MILLISEC_PER_MINUTE
 
           for (let day = 1; day <= 31; day++) {
             let from
             let fromString = ''
             let to
             let toString = ''
-            let fromCalc
-            let fromCalcString = ''
-            let toCalc
-            let toCalcString = ''
+            // let fromCalc
+            // let fromCalcString = ''
+            // let toCalc
+            // let toCalcString = ''
             let duration = 0
             let durationString = ''
             let durationDiff = 0
@@ -138,11 +144,11 @@ module.exports = function (robot) {
 
                 if (fromString) {
                   from = getDateFromTimeString(date, fromString)
-                  fromCalc = new Date(Math.ceil(from.getTime() / increment) * increment)
-                  fromCalcString = getTimeStringFromDate(fromCalc, ':')
+                  // fromCalc = new Date(Math.ceil(from.getTime() / increment) * increment)
+                  // fromCalcString = getTimeStringFromDate(fromCalc, ':')
                 } else {
                   fromString = csvFlag ? '' : '     '
-                  fromCalcString = csvFlag ? '' : '     '
+                  // fromCalcString = csvFlag ? '' : '     '
                 }
 
                 if (toString) {
@@ -150,28 +156,30 @@ module.exports = function (robot) {
                   if (from > to) {
                     to = new Date(to.getTime() + 24 * 60 * 60 * 1000)
                   }
-                  toCalc = new Date(Math.floor(to.getTime() / increment) * increment)
-                  toCalcString = getTimeStringFromDate(toCalc, ':')
+                  // toCalc = new Date(Math.floor(to.getTime() / increment) * increment)
+                  // toCalcString = getTimeStringFromDate(toCalc, ':')
                 } else {
                   toString = csvFlag ? '' : '     '
-                  toCalcString = csvFlag ? '' : '     '
+                  // toCalcString = csvFlag ? '' : '     '
                 }
 
                 // Duration
-                if (toCalc && fromCalc) {
-                  durationDiff = toCalc - fromCalc
-                  if (durationDiff > 0) {
+                duration = 0
+                // if (toCalc && fromCalc) {
+                //   durationDiff = toCalc - fromCalc
+                //   if (durationDiff > 0) {
+                //     duration = durationDiff
+                //   }
+                // }
+                durationDiff = to - from
+                if (durationDiff > 0) {
                     duration = durationDiff
-                  }
                 }
                 durationSum += duration
-                if (duration) {
-                  durationString = getTimeStringFromValue(duration, ':')
-                  if (!csvFlag) {
-                    durationString += '   '
-                  }
-                } else {
-                  durationString = csvFlag ? '' : '        '
+
+                durationString = getTimeStringFromValue(duration, ':')
+                if (!csvFlag) {
+                  durationString += '   '
                 }
 
                 // Overtime
@@ -180,12 +188,14 @@ module.exports = function (robot) {
                 overtimeString = overtime ? getTimeStringFromValue(overtime, ':') : ''
 
                 if (csvFlag) {
-                  list += [dateString, fromString, toString, fromCalcString, toCalcString, durationString, overtimeString].join(',') + '\n'
+                  list += [dateString, fromString, toString, /*fromCalcString, toCalcString, */durationString, overtimeString].join(',') + '\n'
                 } else {
-                  list += '| ' + [dateString, fromString, toString, fromCalcString, toCalcString, durationString, overtimeString].join(' | ') + ' |\n'
+                  list += '| ' + [dateString, fromString, toString, /*fromCalcString,
+                   toCalcString, */durationString, overtimeString].join(' | ') + ' |\n'
                 }
               } else if (csvFlag) {
-                list += dateString + ',,,,,,\n'
+                // list += dateString + ',,,,,,\n'
+                list += dateString + ',,,,\n'
               }
             })
           }
@@ -230,7 +240,6 @@ module.exports = function (robot) {
 
         if (dateInput && !fromInput && !toInput) {
           throw (new Error('Argument error.'))
-          return
         }
 
         if (!dateInput && !fromInput && !toInput) {
@@ -392,14 +401,12 @@ module.exports = function (robot) {
     }
     if (!hm) {
       throw (new Error('Time parse failed.'))
-      return
     }
     const time = new Date(year, month, day, (hm[1] - 0) || 0, (hm[2] - 0) || 0)
     const today = new Date(year, month, day)
     const tomorrow = new Date(year, month, day + 1)
     if (time < today || time >= tomorrow) {
       throw (new Error('Time format error.'))
-      return
     }
     return time
   }
@@ -418,7 +425,6 @@ module.exports = function (robot) {
     }
     if (!ymd) {
       throw (new Error('Date parse failed.'))
-      return
     }
 
     if (ymd[1] && ymd[1].length === 2) {
@@ -438,8 +444,7 @@ module.exports = function (robot) {
   }
 
   function getNow() {
-    const time = new Date()
-    return time
+    return new Date()
   }
 
   function error(e, msg) {
